@@ -37,14 +37,11 @@ python setup.py install \
 	--root=$RPM_BUILD_ROOT \
 	--optimize=2
 
-rm $RPM_BUILD_ROOT%{py_sitescriptdir}/jsonrpc/*.pyc \
-    $RPM_BUILD_ROOT%{py_sitescriptdir}/jsonrpc/*.py \
-    $RPM_BUILD_ROOT%{py_sitescriptdir}/*.egg-info
+rm $RPM_BUILD_ROOT%{py_sitescriptdir}/jsonrpc/*.pyc
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%dir %{py_sitescriptdir}/jsonrpc/
-%{py_sitescriptdir}/jsonrpc/*.pyo
+%{py_sitescriptdir}/jsonrpc*
