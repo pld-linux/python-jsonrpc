@@ -1,24 +1,27 @@
-%define _svn_release r19
+%define subver r19
 Summary:	JSON-RPC implementation
-Summary(pl):	Implementacja prokokołu JSON-RPC
+Summary(pl.UTF-8):	Implementacja prokokołu JSON-RPC
 Name:		python-jsonrpc
-Version:	0.%{_svn_release}
+Version:	0.%{subver}
 Release:	1
 License:	GPL
 Group:		Development/Languages/Python
-Source0:	%{name}-%{_svn_release}.tar.gz
+Source0:	%{name}-%{subver}.tar.gz
 # Source0-md5:	e6ad68f8042fab5fe597015b17141555
 URL:		http://json-rpc.org/wiki/python-json-rpc
-%pyrequires_eq	python
+BuildRequires:	python
+BuildRequires:	rpm-pythonprov
+BuildRequires:	rpmbuild(macros) >= 1.219
+%pyrequires_eq	python-libs
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Python-jsonrpc is an implementation of JSON-RPC protocol
-(http://json-rpc.org/) in Python
+python-jsonrpc is an implementation of JSON-RPC protocol
+(http://json-rpc.org/) in Python.
 
-%description -l pl
-json.py to implementacja protokołu JSON-RPC (http://json.org/) w
+%description -l pl.UTF-8
+python-jsonrpc to implementacja protokołu JSON-RPC (http://json.org/) w
 Pythonie.
 
 %prep
@@ -27,17 +30,16 @@ Pythonie.
 %build
 CFLAGS="%{rpmcflags}"
 export CFLAGS
-python setup.py build
-
+%{__python} setup.py build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-python setup.py install \
+%{__python} setup.py install \
 	--root=$RPM_BUILD_ROOT \
 	--optimize=2
 
-rm $RPM_BUILD_ROOT%{py_sitescriptdir}/jsonrpc/*.pyc
+%py_postclean
 
 %clean
 rm -rf $RPM_BUILD_ROOT
