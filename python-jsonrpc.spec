@@ -28,16 +28,12 @@ Pythonie.
 %setup -q -n jsonrpc-0.01
 
 %build
-CFLAGS="%{rpmcflags}"
-export CFLAGS
-%{__python} setup.py build
+%py_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__python} setup.py install \
-	--root=$RPM_BUILD_ROOT \
-	--optimize=2
+%py_install
 
 %py_postclean
 
